@@ -5,5 +5,15 @@ license          'Apache 2.0'
 description      'Installs/Configures libguestfs'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.1'
+recipe           'libguestfs', 'Installs guestfs libraries and tools'
+recipe           'libguestfs::dev', 'Installs guestfs development libraries'
+recipe           'libguestfs::erlang', 'Installs guestfs erlang bindings'
+recipe           'libguestfs::python', 'Installs guestfs python bindings'
+recipe           'libguestfs::ruby', 'Installs guestfs ruby bindings'
 
-supports 'ubuntu', ">= 12.04"
+supports 'amazon'
+supports 'debian'
+supports 'centos'
+supports 'fedora'
+supports 'redhat'
+supports 'ubuntu'

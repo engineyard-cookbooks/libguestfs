@@ -18,4 +18,12 @@
 #
 
 include_recipe 'libguestfs::default'
-package 'erlang-guestfs'
+
+packages = value_for_platform(
+  ["centos", "redhat", "fedora"] => %w{erlang-guestfs},
+  ["ubuntu", "debian"]           => [],
+)
+
+packages.each do |p|
+  package p
+end

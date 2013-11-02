@@ -18,4 +18,12 @@
 #
 
 include_recipe 'libguestfs::default'
-package 'libguestfs-dev'
+
+packages = value_for_platform(
+  ["centos", "redhat", "fedora"] => %w{libguestfs-dev},
+  ["ubuntu", "debian"]           => %w{libguestfs-devel},
+)
+
+packages.each do |p|
+  package p
+end

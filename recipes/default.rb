@@ -17,7 +17,11 @@
 # limitations under the License.
 #
 
-packages = %w{ guestfish libguestfs0 libguestfs-tools }
+packages = value_for_platform(
+  ["centos", "redhat", "fedora"] => %w{guestfish libguestfs0 libguestfs-tools},
+  ["ubuntu", "debian"]           => %w{libguestfs libguestfs-tools},
+)
+
 packages.each do |p|
   package p
 end
