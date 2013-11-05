@@ -18,10 +18,21 @@
 #
 
 packages = value_for_platform(
-  ["centos", "redhat", "fedora"] => %w{guestfish libguestfs0 libguestfs-tools},
-  ["ubuntu", "debian"]           => %w{libguestfs libguestfs-tools},
+  ["centos", "redhat", "fedora"] => {
+    "default" => %w{libguestfs libguestfs-tools}
+  },
+  ["ubuntu", "debian"]           => {
+    "default" => %w{guestfish libguestfs0 libguestfs-tools},
+  }
 )
 
 packages.each do |p|
   package p
+end
+
+execute "update-guestfs-appliance" do
+  creates node['libguestfs']['supermin_base']
+  user "root"
+  group "root"
+  only_if { node['platform_family'] == 'debian' }
 end
