@@ -17,14 +17,17 @@
 # limitations under the License.
 #
 
-packages = value_for_platform(
-  ["centos", "redhat", "fedora"] => {
-    "default" => %w{libguestfs libguestfs-tools}
-  },
-  ["ubuntu", "debian"]           => {
-    "default" => %w{guestfish libguestfs0 libguestfs-tools},
-  }
-)
+case node['platform_family']
+when 'debian'
+  packages = %w{ libguestfs0 libguestfs-tools }
+  if node['platform'] == 'ubuntu' && node['platform_version'].to_f < 14.04
+    packages += %w{ guestfish }
+  end
+when 'rhel', 'fedora'
+  packages = %w{ libguestfs libguestfs-tools }
+else
+  packages = []
+end
 
 packages.each do |p|
   package p
